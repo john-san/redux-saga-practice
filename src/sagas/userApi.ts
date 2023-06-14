@@ -23,10 +23,7 @@ async function getUsers(): Promise<User[]> {
 // create user
 async function createUser(payload: any): Promise<User> {
   try {
-    const user = await axios.post(
-      "https://dummy.restapiexample.com/api/v1/create",
-      payload
-    );
+    const user = await axios.post("https://reqres.in/api/users", payload);
     return user.data.data;
   } catch (error: any) {
     throw new Error(error?.message || "Something went wrong");

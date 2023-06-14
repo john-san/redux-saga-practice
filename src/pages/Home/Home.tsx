@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from "../../store/actions/userActions";
-import User from "../../store/models/user";
+import { getUsers } from "../../actions/userActions";
+import User from "../../models/user";
 import UserCard from "./components/UserCard";
-import { Row } from "react-bootstrap";
+import { Row, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function Home() {
   const dispatch = useDispatch();
@@ -35,6 +36,9 @@ function Home() {
   return (
     <div>
       <h1>Users</h1>
+      <Link to="/user/create">
+        <Button variant="primary">Create User</Button>
+      </Link>
       <div>{usersContent}</div>
     </div>
   );

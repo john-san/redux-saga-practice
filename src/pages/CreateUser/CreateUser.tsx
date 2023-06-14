@@ -1,27 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { createUser } from "../../actions/userActions";
 import { Form, Button } from "react-bootstrap";
-import { FaSave } from "react-icons/fa";
-import User from "../../models/user";
 
-interface EditUserProps {
-  user: User;
-  onSave: (user: User) => void;
-}
-
-const EditUser = ({ user, onSave }: EditUserProps) => {
-  const [firstName, setFirstName] = useState(user.first_name);
-  const [lastName, setLastName] = useState(user.last_name);
-  const [email, setEmail] = useState(user.email);
+const CreateUser = () => {
+  const dispatch = useDispatch();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("EditUser handleSubmit");
-    // onSave({ ...user, first_name: firstName, last_name: lastName, email });
+    dispatch(
+      createUser({ first_name: firstName, last_name: lastName, email: email })
+    );
+    setFirstName("");
+    setLastName("");
+    setEmail("");
   };
-
-  useEffect(() => {
-    // load user from store
-  }, []);
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -64,17 +60,14 @@ const EditUser = ({ user, onSave }: EditUserProps) => {
         />
       </Form.Group>
 
-      <div className="d-flex justify-content-end">
-        <Button
-          variant="primary"
-          type="submit"
-        >
-          <FaSave className="me-2" />
-          Save
-        </Button>
-      </div>
+      <Button
+        variant="primary"
+        type="submit"
+      >
+        Create User
+      </Button>
     </Form>
   );
 };
 
-export default EditUser;
+export default CreateUser;

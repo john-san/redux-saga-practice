@@ -1,20 +1,29 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest, select } from "redux-saga/effects";
 import { ActionTypes } from "../actions/userActions";
 import {
   getUsersSuccess,
   createUserSuccess,
   deleteUserSuccess,
   updateUserSuccess,
+  getUsersFailure,
+  createUserFailure,
+  deleteUserFailure,
+  updateUserFailure,
 } from "../actions/userActions";
 import { getUsers, createUser, deleteUser, updateUser } from "./userApi";
 import User from "../models/user";
 
 function* getUsersSaga() {
   try {
-    const users: User[] = yield call(getUsers);
-    yield put(getUsersSuccess(users)); // dispatches users to the reducer
+    console.log("users");
+    const users: User[] = yield select((state) => state.users.users);
+    // if users is empty, fetch users from the API
+    if (users.length == 0) {
+      const fetchedUsers: User[] = yield call(getUsers);
+      yield put(getUsersSuccess(fetchedUsers)); // dispatches users to the reducer
+    }
   } catch (error) {
-    console.log(error);
+    yield put(getUsersFailure(error));
   }
 }
 
@@ -23,7 +32,7 @@ function* createUserSaga(action: any) {
     const user: User = yield call(createUser, action.payload);
     yield put(createUserSuccess(user));
   } catch (error) {
-    console.log(error);
+    yield put(createUserFailure(error));
   }
 }
 
@@ -32,7 +41,7 @@ function* deleteUserSaga(action: any) {
     yield call(deleteUser, action.payload);
     yield put(deleteUserSuccess(action.payload));
   } catch (error) {
-    console.log(error);
+    yield put(deleteUserFailure(error));
   }
 }
 
@@ -41,7 +50,7 @@ function* updateUserSaga(action: any) {
     const user: User = yield call(updateUser, action.payload);
     yield put(updateUserSuccess(user));
   } catch (error) {
-    console.log(error);
+    yield put(updateUserFailure(error));
   }
 }
 

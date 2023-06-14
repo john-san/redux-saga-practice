@@ -1,6 +1,6 @@
 // typescript react component that accepts a user prop
 import { Card } from "react-bootstrap";
-import User from "../../../store/models/user";
+import User from "../../../models/user";
 import { FaEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 

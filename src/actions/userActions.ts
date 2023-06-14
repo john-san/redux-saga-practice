@@ -3,12 +3,16 @@ import User from "../models/user";
 export enum ActionTypes {
   GET_USERS = "GET_USERS",
   GET_USERS_SUCCESS = "GET_USERS_SUCCESS",
+  GET_USERS_FAILURE = "GET_USERS_FAILURE",
   CREATE_USER = "CREATE_USER",
   CREATE_USER_SUCCESS = "CREATE_USER_SUCCESS",
+  CREATE_USER_FAILURE = "CREATE_USER_FAILURE",
   DELETE_USER = "DELETE_USER",
   DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS",
+  DELETE_USER_FAILURE = "DELETE_USER_FAILURE",
   UPDATE_USER = "UPDATE_USER",
   UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS",
+  UPDATE_USER_FAILURE = "UPDATE_USER_FAILURE",
 }
 
 /* Action Creators */
@@ -21,6 +25,11 @@ export const getUsersSuccess = (users: User[]) => ({
   payload: users,
 });
 
+export const getUsersFailure = (error: any) => ({
+  type: ActionTypes.GET_USERS_FAILURE,
+  payload: error,
+});
+
 export const createUser = (user: User) => ({
   type: ActionTypes.CREATE_USER,
   payload: user,
@@ -29,6 +38,11 @@ export const createUser = (user: User) => ({
 export const createUserSuccess = (user: User) => ({
   type: ActionTypes.CREATE_USER_SUCCESS,
   payload: user,
+});
+
+export const createUserFailure = (error: any) => ({
+  type: ActionTypes.CREATE_USER_FAILURE,
+  payload: error,
 });
 
 export const deleteUser = (id: number) => ({
@@ -41,6 +55,11 @@ export const deleteUserSuccess = (id: number) => ({
   payload: id,
 });
 
+export const deleteUserFailure = (error: any) => ({
+  type: ActionTypes.DELETE_USER_FAILURE,
+  payload: error,
+});
+
 export const updateUser = (user: User) => ({
   type: ActionTypes.UPDATE_USER,
   payload: user,
@@ -49,4 +68,9 @@ export const updateUser = (user: User) => ({
 export const updateUserSuccess = (user: User) => ({
   type: ActionTypes.UPDATE_USER_SUCCESS,
   payload: user,
+});
+
+export const updateUserFailure = (error: any) => ({
+  type: ActionTypes.UPDATE_USER_FAILURE,
+  payload: error,
 });
