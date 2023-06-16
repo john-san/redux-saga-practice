@@ -1,6 +1,7 @@
 import User from "../models/user";
 // enum is best because because it is type safe and also it is easy to read
 export enum ActionTypes {
+  GET_USER_BY_ID = "GET_USER_BY_ID",
   GET_USERS = "GET_USERS",
   GET_USERS_SUCCESS = "GET_USERS_SUCCESS",
   GET_USERS_FAILURE = "GET_USERS_FAILURE",
@@ -13,9 +14,15 @@ export enum ActionTypes {
   UPDATE_USER = "UPDATE_USER",
   UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS",
   UPDATE_USER_FAILURE = "UPDATE_USER_FAILURE",
+  UPDATE_USER_CANCEL = "UPDATE_USER_CANCEL",
 }
 
 /* Action Creators */
+export const getUserById = (id: number) => ({
+  type: ActionTypes.GET_USER_BY_ID,
+  payload: id,
+});
+
 export const getUsers = () => ({
   type: ActionTypes.GET_USERS,
 });
@@ -73,4 +80,8 @@ export const updateUserSuccess = (user: User) => ({
 export const updateUserFailure = (error: any) => ({
   type: ActionTypes.UPDATE_USER_FAILURE,
   payload: error,
+});
+
+export const updateUserCancel = () => ({
+  type: ActionTypes.UPDATE_USER_CANCEL,
 });

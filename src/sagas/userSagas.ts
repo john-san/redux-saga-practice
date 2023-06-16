@@ -13,12 +13,14 @@ import {
 import { getUsers, createUser, deleteUser, updateUser } from "./userApi";
 import User from "../models/user";
 
+// saga worker
 function* getUsersSaga() {
   try {
-    console.log("users");
-    const users: User[] = yield select((state) => state.users.users);
-    // if users is empty, fetch users from the API
-    if (users.length == 0) {
+    const initialFetch: boolean = yield select(
+      (state) => state.user.initialFetch
+    );
+    // initial fetch hasn't been performed, fetch users from the API
+    if (initialFetch == false) {
       const fetchedUsers: User[] = yield call(getUsers);
       yield put(getUsersSuccess(fetchedUsers)); // dispatches users to the reducer
     }
@@ -53,7 +55,7 @@ function* updateUserSaga(action: any) {
     yield put(updateUserFailure(error));
   }
 }
-
+// saga listener
 export function* userSagas() {
   yield takeLatest(ActionTypes.GET_USERS, getUsersSaga);
   yield takeLatest(ActionTypes.CREATE_USER, createUserSaga);

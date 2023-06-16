@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home/Home";
 import CreateUser from "./pages/CreateUser/CreateUser";
+import EditUser from "./pages/EditUser/EditUser";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
         />
         <Route
           path="/user/edit/:id"
-          element={<h1>Edit User</h1>}
+          element={<EditUser />}
         />
       </Routes>
     </Router>

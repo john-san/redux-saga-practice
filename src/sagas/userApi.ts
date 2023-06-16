@@ -1,18 +1,12 @@
 import axios from "axios";
 import User from "../models/user";
 
-/*
-1	/employee	GET	JSON	https://dummy.restapiexample.com/api/v1/employees	Get all employee data	Details
-2	/employee/{id}	GET	JSON	https://dummy.restapiexample.com/api/v1/employee/1	Get a single employee data	Details
-3	/create	POST	JSON	https://dummy.restapiexample.com/api/v1/create	Create new record in database	Details
-4	/update/{id}	PUT	JSON	https://dummy.restapiexample.com/api/v1/update/21	Update an employee record	Details
-5	/delete/{id}	DELETE	JSON	https://dummy.restapiexample.com/api/v1/delete/2	Delete an employee record	Details
-*/
+const API_BASE_URL = "https://reqres.in/api/users";
 
 // get all users. https://reqres.in/api/users
 async function getUsers(): Promise<User[]> {
   try {
-    const response = await axios.get("https://reqres.in/api/users");
+    const response = await axios.get(API_BASE_URL);
     const users: User[] = response.data.data;
     return users;
   } catch (error: any) {
@@ -23,32 +17,29 @@ async function getUsers(): Promise<User[]> {
 // create user
 async function createUser(payload: any): Promise<User> {
   try {
-    const user = await axios.post("https://reqres.in/api/users", payload);
-    return user.data.data;
+    const user = await axios.post(API_BASE_URL, payload);
+    user.data.id = parseInt(user.data.id);
+    return user.data;
   } catch (error: any) {
     throw new Error(error?.message || "Something went wrong");
   }
 }
 
-// update user 	https://dummy.restapiexample.com/api/v1/update/21
+// update user
 async function updateUser(payload: any): Promise<User> {
   try {
-    const user = await axios.put(
-      `https://dummy.restapiexample.com/api/v1/update/${payload.id}`,
-      payload
-    );
-    return user.data.data;
+    const res = await axios.put(`${API_BASE_URL}/${payload.id}`, payload);
+    // res.data == user
+    return res.data;
   } catch (error: any) {
     throw new Error(error?.message || "Something went wrong");
   }
 }
 
-// delete user 	https://dummy.restapiexample.com/api/v1/delete/2
+// delete user
 async function deleteUser(payload: any): Promise<Boolean> {
   try {
-    const response = await axios.delete(
-      `https://dummy.restapiexample.com/api/v1/delete/${payload}`
-    );
+    const response = await axios.delete(`${API_BASE_URL}/${payload}`);
     if (response.data.status === "success") {
       return true;
     } else {

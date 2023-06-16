@@ -2,7 +2,7 @@
 import { Card } from "react-bootstrap";
 import User from "../../../models/user";
 import { FaEdit } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface UserCardProps {
   user: User;
@@ -10,11 +10,6 @@ interface UserCardProps {
 
 const UserCard = ({ user }: UserCardProps) => {
   const { first_name, last_name, email, avatar } = user;
-  const navigate = useNavigate();
-
-  const handleEdit = () => {
-    navigate(`/user/edit/${user.id}`);
-  };
 
   return (
     <Card>
@@ -30,12 +25,11 @@ const UserCard = ({ user }: UserCardProps) => {
         </Card.Title>
         <Card.Text className="text-center">{email}</Card.Text>
         <div className="d-flex justify-content-center">
-          <button
-            className="btn btn-primary me-2"
-            onClick={handleEdit}
-          >
-            <FaEdit />
-          </button>
+          <Link to={`/user/edit/${user.id}`}>
+            <button className="btn btn-primary me-2">
+              <FaEdit />
+            </button>
+          </Link>
         </div>
       </Card.Body>
     </Card>

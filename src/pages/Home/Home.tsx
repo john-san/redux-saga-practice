@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 function Home() {
   const dispatch = useDispatch();
   const users = useSelector((state: any) => state.user.users);
-
+  console.log("Home users", users);
   useEffect(() => {
     dispatch(getUsers());
   }, [dispatch]);

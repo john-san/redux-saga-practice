@@ -2,21 +2,30 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createUser } from "../../actions/userActions";
 import { Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import defaultAvatar from "../../assets/User-Circle-512.png";
 
 const CreateUser = () => {
   const dispatch = useDispatch();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(
-      createUser({ first_name: firstName, last_name: lastName, email: email })
+    await dispatch(
+      createUser({
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        avatar: defaultAvatar,
+      })
     );
     setFirstName("");
     setLastName("");
     setEmail("");
+    navigate("/");
   };
 
   return (
